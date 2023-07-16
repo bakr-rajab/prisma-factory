@@ -19,7 +19,9 @@ async function bootstrap() {
     .addSecurityRequirements('bearer')
     .build();
 
-  const PORT = 3000;
+  const PORT = process.env.PORT;
+  console.log('444444', process.env.PORT);
+
   const document = SwaggerModule.createDocument(app, config, {});
   SwaggerModule.setup('api', app, document, {
     customSiteTitle: 'Lohanza API Docs',
