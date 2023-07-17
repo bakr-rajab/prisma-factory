@@ -33,7 +33,7 @@ async function bootstrap() {
   });
   await app.listen(PORT, () => {
     Logger.verbose(
-      `swagger listen on http://localhost:${PORT}/docs  `,
+      `swagger listen on http://localhost:${PORT}/api  `,
       'Swagger',
     );
   });

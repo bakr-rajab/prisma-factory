@@ -2,17 +2,34 @@
 
 version: '3.8'
 services:
-
   postgres:
-    image: postgres:13.5
+    image: postgres:15.3
     restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=00000
-    volumes:
-      - postgres:/var/lib/postgresql/data
+    container_name: postgres
     ports:
-      - '5432:5432'
+      - 5432:5432
+    environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=00000
+    volumes:
+      - ./../postgres:/var/lib/postgresql/data
 
-volumes:
-  postgres:
+  app:
+    restart: always
+    container_name: nest-prisma
+    depends_on: 
+      - postgres
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/usr/projects/
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - NEW_DATABASE_URL=postgres://postgres:00000@postgres:5432/postgres
+    ports:
+      - 3000:3000
+    

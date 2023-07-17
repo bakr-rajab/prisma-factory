@@ -23,10 +23,10 @@ export class AppController {
     return this.postService.post({ id: Number(id) });
   }
 
-  @Get('feed')
+  @Get('posts')
   async getPublishedPosts(): Promise<PostModel[]> {
     return this.postService.posts({
-      where: { published: true },
+      // where: { published: true },
     });
   }
 
@@ -53,12 +53,14 @@ export class AppController {
     @Body() postData: { title: string; content?: string; authorEmail: string },
   ): Promise<PostModel> {
     const { title, content, authorEmail } = postData;
+    console.log({ postData });
+
     return this.postService.createPost({
       title,
       content,
-      author: {
-        connect: { email: authorEmail },
-      },
+      // author: {
+      //   connect: { email: authorEmail },
+      // },
     });
   }
 
